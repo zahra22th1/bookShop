@@ -21,4 +21,5 @@ private Long id;
 private LocalDateTime createdAt;
 @UpdateTimestamp
 private LocalDateTime updatedAt;
+private LocalDateTime deleted;
 }

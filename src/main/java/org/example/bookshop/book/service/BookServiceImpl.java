@@ -5,7 +5,6 @@ import org.example.bookshop.dto.resquest.BookRequest;
 import org.example.bookshop.excepion.RuleException;
 import org.example.bookshop.model.Book;
 import org.example.bookshop.repository.BookRepository;
-import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -57,9 +56,19 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponse findById(Long id) {
-      Book book = bookRepository.findById(id)
+
+      return createBookResponse(findByIdReturnBook(id));
+    }
+
+    @Override
+    public void deleted(Long id) {
+        Book byId = findByIdReturnBook(id);
+        bookRepository.delete(byId);
+    }
+
+    private Book findByIdReturnBook(Long id){
+        return bookRepository.findById(id)
                 .orElseThrow(() -> new RuleException("book.not.found"));
-      return createBookResponse(book);
     }
 
     private Book createBook(BookRequest bookRequest){
