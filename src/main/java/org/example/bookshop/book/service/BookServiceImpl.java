@@ -8,7 +8,9 @@ import org.example.bookshop.repository.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -61,9 +63,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void deleted(Long id) {
         Book byId = findByIdReturnBook(id);
         bookRepository.delete(byId);
+
     }
 
     private Book findByIdReturnBook(Long id){
